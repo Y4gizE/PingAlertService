@@ -3,7 +3,6 @@
 
 ## Description
 
-A more detailed description of your project.
 
 ## Requirements
 
