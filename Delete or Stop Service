@@ -1,0 +1,7 @@
+Don't forget to create a .bat file for each command.
+
+Delete service 
+"C:\folder destination\prunsrv.exe" //DS//Pingo
+
+Stop service
+taskkill /F /FI "SERVICES eq Pingo"
