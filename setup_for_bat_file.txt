@@ -1,0 +1,13 @@
+REM Install the service using prunsrv.exe utility
+"C:\folder destination\prunsrv.exe" //IS//Pingo ^
+ --DisplayName "Pingo" ^
+ --Description "Monitors active/inactive servers" ^
+ --Install="C:\folder destination\prunsrv.exe" ^
+ --Jvm="C:\Program Files\Java\jdk-20\bin\server\jvm.dll" ^
+ --Classpath "C:\folder destination\WindowsService.jar" ^
+ --Environment="PATH=C:\Program Files\Java\jdk-20\bin" ^
+ --StartClass="com.ege.WindowsService" ^
+ --JavaHome="C:\Program Files\Java\jdk-20" ^
+ --StartPath=C:\folder destination\ ^
+ --StartMode=jvm ^
+ --Startup=auto
