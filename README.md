@@ -1,6 +1,5 @@
 # PingAlertService
 
-Brief description of your project.
 
 ## Description
 
