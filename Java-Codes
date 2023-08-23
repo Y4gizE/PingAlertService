@@ -1,0 +1,96 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.Properties;
+
+public class WindowsService {
+
+    public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException, AddressException, MessagingException 
+    {
+        // Location where the text file will be saved
+        String fileLocation = "C:\\your file location\\log.txt";
+        
+        // File Handling Phase
+        File file = new File(fileLocation);
+        FileWriter writer = new FileWriter(file, true);
+        BufferedWriter bufferWriter = new BufferedWriter(writer);
+        
+        String[] ipAddress ={
+            "ip", "ip2",
+            "ip3", "ip4"
+        };
+        
+        // Email Phase
+        String[] recipients = {
+            "targetmail@target.com", "targetmail2@target.com"
+        };
+        
+        String fromEmail = "hostemail@host.com";
+        String mailHost = "iphost";
+        
+        Properties properties = System.getProperties();
+        properties.setProperty("mail.smtp.host", mailHost);
+        
+        Session mailSession = Session.getDefaultInstance(properties);
+        
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setFrom(new InternetAddress(fromEmail, "Helpdesk"));
+        message.setSubject("Unreachable Server");
+        
+        // List for Mail Content
+        List<String> mailContent = new ArrayList<String>();
+        
+        // Adding Recipients to the Email
+        for (int x = 0; x < recipients.length; x++) {
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipients[x]));
+        }
+        
+        // Checking IP addresses one by one
+        while (true) {
+            boolean problem = false;
+            for (int i = 0; i < ipAddress.length; i++) {   
+                // timeout = value in milliseconds, values above this will return "false"
+                Date currentTime = new Date();
+                try {
+                    InetAddress inet = InetAddress.getByName(ipAddress[i]);
+                    if (!inet.isReachable(5000)) {
+                        bufferWriter.write("Cannot Reach Server" + " " + ipAddress[i] + " " + currentTime + "\n");
+                        mailContent.add("Cannot Reach Server" + " " + ipAddress[i] + " " + currentTime + "\n");
+                        problem = true; 
+                    }
+                } catch (UnknownHostException unk) {
+                    bufferWriter.write(unk.toString() + " " + currentTime + "\n");
+                    mailContent.add(unk.toString() + " " + currentTime + "\n");
+                    problem = true; 
+                } catch (IOException e) {
+                    bufferWriter.write(e.toString() + " " + currentTime + "\n");
+                    mailContent.add(e.toString() + " " + currentTime + "\n");                                                   
+                    problem = true; 
+                }
+            }   
+            if (problem) {             
+                // Adding mailContent list to the email message
+                message.setText(mailContent.toString());
+
+                // Sending the Email
+                Transport.send(message);
+
+                // Updating the content of the text file
+                bufferWriter.flush();                          
+            }
+
+            // 7200 seconds = 2 hours
+            TimeUnit.SECONDS.sleep(0);
+            bufferWriter.flush();
+        }    
+    }
+}
