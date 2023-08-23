@@ -10,6 +10,7 @@ PingAlertService is a monitoring tool that periodically checks the reachability 
 
 - Java Development Kit (JDK) 20
 - Internet connectivity for email alerts
+- (Optional)NetBeans IDE 18
 
 ## Installation
 
@@ -17,6 +18,8 @@ PingAlertService is a monitoring tool that periodically checks the reachability 
 2. Open the project in your preferred Java development environment (e.g., Apache NetBeans 18).
 3. Update the IP addresses and email settings in the `WindowsService.java` file.
 4. Compile and run the `WindowsService.java` file.
+
+**Note:** Remember to add the contents of the zip file to your IDE's library or classpath. This ensures that the required dependencies are available during compilation and runtime.
 
 ## Usage
 
@@ -42,4 +45,6 @@ Contributions to this project are welcome! If you would like to contribute, plea
 3. Make your changes and commit them with descriptive messages.
 4. Push your changes to your fork.
 5. Create a pull request detailing your changes.
+
+
 
