@@ -31,10 +31,10 @@ public class WindowsService {
         
         // Email Phase
         String[] recipients = {
-            "targetmail@target.com", "targetmail2@target.com"
+            "targetmail", "targetmail2"
         };
         
-        String fromEmail = "hostemail@host.com";
+        String fromEmail = "hostemai";
         String mailHost = "iphost";
         
         Properties properties = System.getProperties();
